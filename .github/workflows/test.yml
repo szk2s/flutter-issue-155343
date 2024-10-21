@@ -22,8 +22,10 @@ jobs:
         with:
           channel: stable
           flutter-version: 3.24.3
+      - run: flutter doctor -v
       - run: flutter --version
       - run: flutter create my_app
-      - run: |
+      - name: flutter run
+        run: |
           cd my_app
           flutter run -d linux --verbose
