@@ -1,0 +1,32 @@
+# @format
+# 毎回の push で実行するワークフロー。
+# 各パッケージ package.json に test:ci のスクリプトで定義されるテストを実行する。
+name: Test
+on:
+  workflow_dispatch:
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  test:
+    name: Run Tests
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - name: Linux
+            runs-on: ubuntu-24.04
+          - name: Linux
+            runs-on: ubuntu-22.04
+    runs-on: ${{ matrix.runs-on }}
+    steps:
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          flutter-version: 3.24.3
+      - run: flutter --version
+      - run: flutter create my_app
+      - run: cd my_app
+      - run: flutter pub get
+      - run: flutter run -d linux --verbose
