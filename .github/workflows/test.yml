@@ -25,6 +25,7 @@ jobs:
         with:
           channel: stable
           flutter-version: 3.24.3
+      - uses: actions/checkout@v4
       - run: flutter --version
       - run: flutter create my_app
       - run: cd my_app
